@@ -3,7 +3,7 @@ import time
 import random
 from requests_oauthlib import OAuth1Session
 
-def getAPI(self):
+def getAPI():
     # キー取得
     with open('key.txt') as f:
         keys = json.load(f)
