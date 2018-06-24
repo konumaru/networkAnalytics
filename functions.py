@@ -52,7 +52,7 @@ class twitter():
                 # print('totalGetFriendNum: {0}'.format(len(ids)))
                 cursor = temp['next_cursor']
                 params['cursor'] = temp['next_cursor']
-                time.sleep(30*random.uniform(0.5,1.5))
+                time.sleep(10*random.uniform(0.5,1.5))
             else:
                 print ("Error: %d at getFriendIds" % req.status_code)
 
