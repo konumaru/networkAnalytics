@@ -7,10 +7,7 @@ from requests_oauthlib import OAuth1Session
 
 
 class twitter():
-    def __init__(self):
-        with open('./data/key.json') as f:
-            keys = json.load(f)
-        # 環境変数から承認情報を取得
+    def __init__(self, keys):
         CONSUMER_KEY    = keys['CONSUMER_KEY']
         CONSUMER_SECRET = keys['CONSUMER_SECRET']
         ACCESS_TOKEN    = keys['ACCESS_TOKEN']
@@ -98,4 +95,3 @@ class twitter():
                     pass
         else:
             print ("Error: %d at getUserInfo()" % req.status_code)
- 
