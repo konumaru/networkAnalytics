@@ -5,7 +5,7 @@ class psql_save(object):
     def __init__(self):
         self.conn = psycopg2.connect(
             host="localhost",
-            database="twitter_analytics",
+            database="my_db",
             port="5432",
             user="rui",
             password="password"
@@ -16,10 +16,13 @@ class psql_save(object):
 
 
     def recreate_tables(self):
+        self.cursor.execute('DROP SCHEMA IF EXISTS twitter')
         self.cursor.execute('CREATE SCHEMA twitter')
-        self.cursor.execute('DROP TABLE IF EXISTS twitter.user_info')
+        # ユーザー情報
+        self.cursor.execute('DROP TABLE IF EXISTS twitter.follower_user_info')
         self.cursor.execute('''
-                CREATE TABLE IF NOT EXISTS twitter.user_info (
+                CREATE TABLE IF NOT EXISTS twitter.follower_user_info (
+                    slave_screen_name TEXT,
                     user_id BIGINT,
                     screen_name TEXT,
                     friends_count INT,
@@ -28,7 +31,7 @@ class psql_save(object):
                     PRIMARY KEY(user_id)
                 )
             ''')
-
+        # ツイート情報
         self.cursor.execute('DROP TABLE IF EXISTS twitter.status_info')
         self.cursor.execute('''
                 CREATE TABLE IF NOT EXISTS twitter.status_info (
@@ -41,10 +44,11 @@ class psql_save(object):
             ''')
 
 
-    def insert_user_info(self, user):
+    def insert_user_info(self, slave_screen_name, user):
         self.cursor.execute(
-            '''INSERT INTO twitter.user_info VALUES (%s, %s, %s, %s, %s)''',
+            '''INSERT INTO twitter.follower_user_info VALUES (%s, %s, %s, %s, %s, %s)''',
             (
+                slave_screen_name,
                 user['id'],
                 user['screen_name'],
                 user['friends_count'],

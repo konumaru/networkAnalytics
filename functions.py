@@ -22,7 +22,7 @@ class twitter():
         url = 'https://api.twitter.com/1.1/followers/ids.json?'
         params = {'screen_name': screen_name}
 
-        while cursor != 0 or len(ids)<50000:
+        while cursor != 0 and len(ids)<50000:
             req = self.api.get(url, params=params)
             if req.status_code == 200:
                 temp = json.loads(req.text)
@@ -33,6 +33,7 @@ class twitter():
                 time.sleep(10*random.uniform(0.5,1.5))
             else:
                 print ("Error: %d at getFollowerIds" % req.status_code)
+
         return ids
 
 
@@ -48,17 +49,18 @@ class twitter():
             if req.status_code == 200:
                 temp = json.loads(req.text)
                 ids.extend(temp['ids'])
-                print('totalGetFriendNum: {0}'.format(len(ids)))
+                # print('totalGetFriendNum: {0}'.format(len(ids)))
                 cursor = temp['next_cursor']
                 params['cursor'] = temp['next_cursor']
-                time.sleep(10*random.uniform(0.5,1.5))
+                time.sleep(30*random.uniform(0.5,1.5))
             else:
                 print ("Error: %d at getFriendIds" % req.status_code)
+
         return ids
 
 
     # user_idからユーザー情報の取得
-    def getUserInfo(self, ids):
+    def getUserInfo(self, query_screen_name, ids):
         url = 'https://api.twitter.com/1.1/users/lookup.json'
         ids = np.array(ids).astype(str)
         psql = psql_save()
@@ -72,7 +74,7 @@ class twitter():
                 req_text = json.loads(req.text)
                 for user in req_text:
                     try:
-                        psql.insert_user_info(user)
+                        psql.insert_user_info(query_screen_name, user)
                     except:
                         pass
             else:
