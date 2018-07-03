@@ -42,6 +42,16 @@ class psql_save(object):
                     PRIMARY KEY(status_id)
                 )
             ''')
+        # フォロー情報
+        self.cursor.execute('DROP TABLE IF EXISTS twitter.friends')
+        self.cursor.execute('''
+                CREATE TABLE IF NOT EXISTS twitter.friends (
+                    user_id BIGINT,
+                    screen_name TEXT,
+                    friend_ids TEXT,
+                    PRIMARY KEY(user_id)
+                )
+            ''')
 
 
     def insert_user_info(self, slave_screen_name, user):
@@ -67,6 +77,20 @@ class psql_save(object):
                 text
             )
         )
+
+    def insert_friends(self, user_id=None, screen_name=None, friends_ids=None, value_list=None):
+        if value_list != None:
+            self.cursor.execute('''INSERT INTO twitter.friends VALUES '''+value_list)
+        else:
+            self.cursor.execute(
+                '''INSERT INTO twitter.friends VALUES (%s, %s, %s)''',
+                (
+                    user_id,
+                    screen_name,
+                    friends_ids
+                )
+            )
+
 
     def close_section(self):
         self.cursor.close()

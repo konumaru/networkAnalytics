@@ -27,10 +27,10 @@ class twitter():
             if req.status_code == 200:
                 temp = json.loads(req.text)
                 ids.extend(temp['ids'])
-                print('totalGetFollowerNum: {0}'.format(len(ids)))
                 cursor = temp['next_cursor']
                 params['cursor'] = temp['next_cursor']
                 time.sleep(10*random.uniform(0.5,1.5))
+                print('totalGetFollowerNum: {0}'.format(len(ids)))
             else:
                 print ("Error: %d at getFollowerIds" % req.status_code)
 
@@ -49,10 +49,10 @@ class twitter():
             if req.status_code == 200:
                 temp = json.loads(req.text)
                 ids.extend(temp['ids'])
-                # print('totalGetFriendNum: {0}'.format(len(ids)))
                 cursor = temp['next_cursor']
                 params['cursor'] = temp['next_cursor']
                 time.sleep(10*random.uniform(0.5,1.5))
+                # print('totalGetFriendNum: {0}'.format(len(ids)))
             else:
                 print ("Error: %d at getFriendIds" % req.status_code)
 
