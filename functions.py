@@ -53,6 +53,14 @@ class twitter():
                 params['cursor'] = temp['next_cursor']
                 time.sleep(10*random.uniform(0.5,1.5))
                 # print('totalGetFriendNum: {0}'.format(len(ids)))
+            elif req.status_code == 429:
+                print('Too Many Requests')
+                time.sleep(20*60*random.uniform(0.5,1.5))
+            elif req.status_code == 401:
+                print('This user is Unauthorized')
+                return list()
+            elif req.status_code == 404:
+                print ('This user is Not Found')
             else:
                 print ("Error: %d at getFriendIds" % req.status_code)
 

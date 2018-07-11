@@ -56,14 +56,15 @@ class psql_save(object):
 
     def insert_user_info(self, slave_screen_name, user):
         self.cursor.execute(
-            '''INSERT INTO twitter.follower_user_info VALUES (%s, %s, %s, %s, %s, %s)''',
+            '''INSERT INTO twitter.follower_user_info VALUES (%s, %s, %s, %s, %s, %s, %s)''',
             (
                 slave_screen_name,
                 user['id'],
                 user['screen_name'],
                 user['friends_count'],
                 user['followers_count'],
-                user['description']
+                user['description'],
+                int(user['protected'])
             )
         )
 
@@ -78,16 +79,16 @@ class psql_save(object):
             )
         )
 
-    def insert_friends(self, user_id=None, screen_name=None, friends_ids=None, value_list=None):
+    def insert_friends(self, user_id=None, screen_name=None, friend_ids=None, value_list=None):
         if value_list != None:
-            self.cursor.execute('''INSERT INTO twitter.friends VALUES '''+value_list)
+            self.cursor.execute('''INSERT INTO twitter.friends VALUES ''' + value_list)
         else:
             self.cursor.execute(
                 '''INSERT INTO twitter.friends VALUES (%s, %s, %s)''',
                 (
                     user_id,
                     screen_name,
-                    friends_ids
+                    friend_ids
                 )
             )
 
