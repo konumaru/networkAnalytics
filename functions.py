@@ -1,3 +1,4 @@
+import os
 import json
 import time
 import random
@@ -7,13 +8,12 @@ from requests_oauthlib import OAuth1Session
 
 
 class twitter():
-    def __init__(self, keys):
-        CONSUMER_KEY    = keys['CONSUMER_KEY']
-        CONSUMER_SECRET = keys['CONSUMER_SECRET']
-        ACCESS_TOKEN    = keys['ACCESS_TOKEN']
-        ACCESS_SECRET   = keys['ACCESS_SECRET']
+    def __init__(self):
+        CONSUMER_KEY = os.environ['TWITTER_CONSUMER_KEY']
+        CONSUMER_SECRET = os.environ['TWITTER_CONSUMER_SECRET']
+        ACCESS_TOKEN = os.environ['TWITTER_ACCESS_TOKEN']
+        ACCESS_SECRET = os.environ['TWITTER_ACCESS_SECRET']
         self.api = OAuth1Session(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
-
 
     # 特定ユーザーフォロワーidリストを取得
     def getFollowerIds(self, screen_name):
@@ -84,9 +84,8 @@ class twitter():
                     try:
                         psql.insert_user_info(query_screen_name, user)
                     except:
-                        pass
-            else:
-                print ("Error: %d at getUserInfo()" % req.status_code)
+                        print ("Error: %d at getUserInfo()" % req.status_code)
+
             time.sleep(2*random.uniform(0.5,1.5))
 
 
