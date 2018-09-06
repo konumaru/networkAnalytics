@@ -1,6 +1,7 @@
 ### https://raw.github.com/github/gitignore/4b37ac26ffaee3e6566723ea187202d1e44ebb52/Python.gitignore
 
 key.json
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -93,6 +94,7 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+.envrc
 
 # Spyder project settings
 .spyderproject
@@ -106,3 +108,7 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+
+# 追記
+note/
