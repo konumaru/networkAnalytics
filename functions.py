@@ -52,7 +52,6 @@ class twitter():
                 cursor = temp['next_cursor']
                 params['cursor'] = temp['next_cursor']
                 time.sleep(10*random.uniform(0.5,1.5))
-                # print('totalGetFriendNum: {0}'.format(len(ids)))
             elif req.status_code == 429:
                 print('Too Many Requests')
                 time.sleep(20*60*random.uniform(0.5,1.5))
@@ -63,7 +62,6 @@ class twitter():
                 print ('This user is Not Found')
             else:
                 print ("Error: %d at getFriendIds" % req.status_code)
-
         return ids
 
 

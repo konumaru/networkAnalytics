@@ -35,11 +35,13 @@ class psql_save(object):
     def insert_friends(self, user_id=None, screen_name=None, friend_ids=None, value_list=None):
         if value_list != None:
             self.cursor.execute(
-                '''INSERT INTO for_research.friends VALUES ''' + value_list)
+                '''INSERT INTO for_research.friend_ids VALUES (%s, %s, %s) ''' + value_list
+            )
         else:
             self.cursor.execute(
-                '''INSERT INTO for_research.friends VALUES (%s, %s, %s)''',
-                (user_id, screen_name, friend_ids))
+                '''INSERT INTO for_research.friend_ids VALUES (%s, %s, %s)''',
+                (user_id, screen_name, friend_ids)
+            )
 
 
     def close_section(self):

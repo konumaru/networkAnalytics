@@ -1,10 +1,6 @@
 import os
 import pickle
-import random
-from tqdm import tqdm
-
 from functions import twitter
-
 
 def main():
     tw = twitter()

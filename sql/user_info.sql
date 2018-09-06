@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS for_research.user_info (
                     screen_name TEXT,
                     friends_count INT,
                     followers_count INT,
-                    self_discription TEXT,
+                    self_description TEXT,
                     protected INT,
                     PRIMARY KEY(user_id)
                 )
